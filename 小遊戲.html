@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>極限閃避小遊戲</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #222; /* 背景深灰色 */
+            color: white;
+            font-family: Arial, sans-serif;
+            flex-direction: column;
+        }
+        canvas {
+            border: 4px solid #fff;
+            background-color: #000; /* 遊戲畫面黑色 */
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+        }
+        #ui {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        h1 { margin: 5px; font-size: 24px; }
+        p { margin: 5px; color: #aaa; }
+    </style>
+</head>
+<body>
+
+    <div id="ui">
+        <h1>極限閃避</h1>
+        <p>按 <b>← 左</b> 或 <b>→ 右</b> 鍵移動，躲避紅色方塊！</p>
+        <h2 id="score">分數: 0</h2>
+    </div>
+
+    <canvas id="gameCanvas" width="400" height="600"></canvas>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const scoreElement = document.getElementById('score');
+
+        // 遊戲變數
+        let player = { x: 175, y: 550, width: 50, height: 30, color: '#00ffff', speed: 5 };
+        let enemies = [];
+        let score = 0;
+        let gameRunning = true;
+        let frameCount = 0;
+        
+        // 鍵盤控制
+        let keys = {};
+        document.addEventListener('keydown', (e) => keys[e.key] = true);
+        document.addEventListener('keyup', (e) => keys[e.key] = false);
+
+        // 產生敵人
+        function spawnEnemy() {
+            const size = Math.random() * 30 + 20; // 隨機大小
+            const x = Math.random() * (canvas.width - size);
+            enemies.push({
+                x: x,
+                y: -size,
+                width: size,
+                height: size,
+                color: '#ff4444',
+                speed: 3 + Math.random() * 3 // 隨機速度
+            });
+        }
+
+        // 碰撞偵測 (AABB)
+        function isColliding(rect1, rect2) {
+            return (
+                rect1.x < rect2.x + rect2.width &&
+                rect1.x + rect1.width > rect2.x &&
+                rect1.y < rect2.y + rect2.height &&
+                rect1.y + rect1.height > rect2.y
+            );
+        }
+
+        // 遊戲主迴圈
+        function gameLoop() {
+            if (!gameRunning) return;
+
+            // 1. 清除畫面
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // 2. 移動玩家
+            if (keys['ArrowLeft'] && player.x > 0) player.x -= player.speed;
+            if (keys['ArrowRight'] && player.x < canvas.width - player.width) player.x += player.speed;
+
+            // 3. 繪製玩家
+            ctx.fillStyle = player.color;
+            ctx.fillRect(player.x, player.y, player.width, player.height);
+
+            // 4. 管理敵人
+            frameCount++;
+            if (frameCount % 40 === 0) { // 每40幀產生一個敵人
+                spawnEnemy();
+            }
+
+            for (let i = 0; i < enemies.length; i++) {
+                let e = enemies[i];
+                e.y += e.speed;
+
+                // 繪製敵人
+                ctx.fillStyle = e.color;
+                ctx.fillRect(e.x, e.y, e.width, e.height);
+
+                // 檢查碰撞
+                if (isColliding(player, e)) {
+                    gameRunning = false;
+                    alert('遊戲結束！你的分數是: ' + score + '\n按確定重新開始');
+                    document.location.reload();
+                }
+            }
+
+            // 5. 更新分數 (移除超出畫面的敵人)
+            enemies = enemies.filter(e => {
+                if (e.y > canvas.height) {
+                    score++;
+                    scoreElement.innerText = "分數: " + score;
+                    return false;
+                }
+                return true;
+            });
+
+            requestAnimationFrame(gameLoop);
+        }
+
+        // 開始遊戲
+        gameLoop();
+
+    </script>
+</body>
+</html>
