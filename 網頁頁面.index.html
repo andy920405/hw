@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的現代化網頁</title>
+    <style>
+        /* --- 基礎設定 --- */
+        :root {
+            --primary-color: #2563eb; /* 主色調：藍色 */
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --bg-light: #f3f4f6;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        /* --- 導覽列 (Navbar) --- */
+        header {
+            background: white;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: var(--primary-color);
+        }
+
+        /* --- 主視覺區塊 (Hero Section) --- */
+        .hero {
+            background: linear-gradient(135deg, #e0e7ff 0%, #fae8ff 100%);
+            padding: 5rem 5%;
+            text-align: center;
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #111827;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            background-color: #1d4ed8;
+        }
+
+        /* --- 特色區塊 (Features) --- */
+        .features {
+            padding: 4rem 5%;
+            background: white;
+        }
+
+        .features h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            padding: 2rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            text-align: center;
+            transition: box-shadow 0.3s;
+        }
+
+        .card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        /* --- 頁尾 (Footer) --- */
+        footer {
+            background: #1f2937;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: auto;
+        }
+
+        /* --- 手機版調整 --- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            nav ul { display: none; } /* 簡單隱藏導覽列連結以適應手機 */
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">MyWebsite</div>
+        <nav>
+            <ul>
+                <li><a href="#">首頁</a></li>
+                <li><a href="#">關於我們</a></li>
+                <li><a href="#">服務項目</a></li>
+                <li><a href="#">聯絡方式</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>歡迎來到我的全新網頁</h1>
+        <p>這是一個使用 HTML 和 CSS 構建的簡潔模板。你可以輕鬆修改文字、顏色和圖片，打造屬於你的風格。</p>
+        <a href="#" class="btn">開始探索</a>
+    </section>
+
+    <section class="features">
+        <h2>核心特色</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>極速加載</h3>
+                <p>優化的代碼結構，讓網頁開啟速度飛快。</p>
+            </div>
+            <div class="card">
+                <h3>響應式設計</h3>
+                <p>無論在手機、平板還是電腦上都能完美顯示。</p>
+            </div>
+            <div class="card">
+                <h3>容易客製化</h3>
+                <p>結構清晰，即使是初學者也能輕鬆修改。</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 MyWebsite. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
